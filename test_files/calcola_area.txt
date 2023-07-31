@@ -1,0 +1,31 @@
+#*
+    Questo programma calcola l'area di un poligono
+#
+
+var numberDivision := 2;
+
+fun calcolaArea(string poligono, real base, real altezza ,out real area): real
+
+    if ((poligono = 'rettangolo') or (poligono = 'quadrato') or (poligono = 'triangolo')) then
+        area := base * altezza;
+    else
+        area := (base * altezza) / numberDivision;
+    end if;
+
+    return area;
+
+end fun;
+
+main
+    real base := 0, altezza := 0, area;
+    string poligono;
+
+    % poligono 'inserisci il poligono di cui vuoi calcolare la sua area: ';
+	% base 'inserisci la sua base: ';
+	% altezza 'inserisci la sua altezza: ';
+
+    area := calcolaArea(poligono,base,altezza, @area);
+
+    ?. 'L area del poligono ' & poligono & ' e ' & area;
+
+end main;

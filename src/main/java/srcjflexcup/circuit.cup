@@ -1,0 +1,191 @@
+// Declare terminals and nonterminals in the grammar
+// Ho cambiato BOOL_CONST con Bool_Const a cui faccio scegliere TRUE o FALSE
+// Ho cambiato StatList -> Stat con StatList -> epsilon
+// Ho elminato epsioln da Stat
+//(prima nel cmd)"cd C:\Program Files\Java\jdk1.8.0_202\bin\java" -jar C:\CUP\java-cup-11b.jar -symbols CircuitSym -dump -parser Parser -destdir src  src\main\java\srcjflexcup/circuit.cup
+// java -jar C:\CUP\java-cup-11b.jar -symbols CircuitSym -dump -parser Parser -destdir src  src/main/java/srcjflexcup/circuit.cup
+import java_cup.runtime.*;
+import ast.*;
+
+terminal END, MAIN, SEMI, VAR, INTEGER, BOOL, REAL, STRING, COMMA, ASSIGN,OUTPAR;
+terminal FUN, LPAR, RPAR, COLON, OUT, IF, THEN, ELSE, WHILE, LOOP, READ, WRITE, WRITELN, WRITET, WRITEB;
+terminal TRUE, FALSE, NOT, MINUS, NE, EQ, LE, LT, GE, GT, OR, STR_CONCAT, POW, AND, DIVINT, DIV, TIMES, PLUS, RETURN;
+terminal String ID;
+terminal String INTEGER_CONST;
+terminal String STRING_CONST;
+terminal String REAL_CONST;
+non terminal StatNode Stat;
+non terminal ParDeclOpNode ParDecl;
+non terminal ExprListNode ExprList;
+non terminal IdListNode IdList;
+non terminal ElseOpNode Else;
+non terminal ProgramNode Program;
+non terminal VarDeclListNode VarDeclList;
+non terminal FunListNode FunList;
+non terminal BodyOp Main;
+non terminal StatListNode StatList;
+non terminal VarDeclOpNode VarDecl;
+non terminal IdListInitNode IdListInit;
+non terminal IdListInitObblNode IdListInitObbl;
+non terminal BoolConstNode Bool_Const;
+non terminal ConstNode Const;
+non terminal ParamDeclListNode ParamDeclList;
+non terminal NonEmptyParamDeclListNode NonEmptyParamDeclList;
+non terminal TypeNode Type;
+non terminal FunOpNode Fun;
+non terminal ExprNode Expr;
+non terminal IfStatOpNode IfStat;
+non terminal WhileStatOpNode WhileStat;
+non terminal ReadStatOpNode ReadStat;
+non terminal WriteStatOpNode WriteStat;
+non terminal AssignStatOpNode AssignStat;
+non terminal CallFunNode CallFun;
+/* Precedences */
+precedence left OR;
+precedence left AND;
+precedence right NOT;
+precedence nonassoc EQ, NE, LT, LE, GT, GE;
+precedence left STR_CONCAT;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIV, DIVINT;
+precedence right POW;
+precedence left LPAR, RPAR;
+
+Program ::= VarDeclList:e1 FunList:e2 Main:e3 {: RESULT = new ProgramNode(e1,e2,e3); //System.out.println("FINITO!"); :}
+;
+
+VarDeclList ::= /* empty */ {: RESULT = new VarDeclListNode();  :}
+	| VarDecl:e1 VarDeclList:e2 {: RESULT = new VarDeclListNode(e2.getVarDeclOpNodeList(),e1); :}
+;
+
+Main ::= MAIN VarDeclList:e1 StatList:e2 END MAIN SEMI {: RESULT = new BodyOp(e1,e2); :}
+;
+
+FunList ::= /* empty */ {: RESULT = new FunListNode();  :}
+	| Fun:e1 FunList:e2 {: RESULT = new FunListNode(e2.getFunOpNodeList(),e1); :}
+;
+
+VarDecl ::= Type:e1 IdListInit:e2 SEMI {: RESULT = new VarDeclOpNode(e1,e2); :}
+	| VAR IdListInitObbl:e1 SEMI {: RESULT = new VarDeclOpNode(e1); :}
+;
+
+Type ::= INTEGER {: RESULT = new TypeNode(new IntegerNode()); :}
+    | BOOL {: RESULT = new TypeNode(new BoolNode()); :}
+    | REAL {: RESULT = new TypeNode(new RealNode()); :}
+    | STRING {: RESULT = new TypeNode(new StringNode()); :}
+;
+
+IdListInit ::= ID:e {: RESULT = new IdListInitNode(new IdentifierNode(e)); :}
+	| IdListInit:e1 COMMA ID:e2 {: RESULT = new IdListInitNode(new IdentifierNode(e2),e1.getListCoppiaIdExprNode()); :}
+	| ID:e1 ASSIGN Expr:e2 {: RESULT = new IdListInitNode(new IdentifierNode(e1),e2); :}
+	| IdListInit:e1 COMMA ID:e2 ASSIGN Expr:e3 {: RESULT = new IdListInitNode(e1.getListCoppiaIdExprNode(),new IdentifierNode(e2),e3); :}
+;
+
+IdListInitObbl ::= ID:e1 ASSIGN Const:e2 {: RESULT = new IdListInitObblNode(new IdentifierNode(e1),e2); :}
+	| IdListInitObbl:e1 COMMA ID:e2 ASSIGN Const:e3 {: RESULT = new IdListInitObblNode(e1.getListCoppiaIdConstNode(),new IdentifierNode(e2),e3); :}
+;
+
+Const ::= INTEGER_CONST:e {: RESULT = new ConstNode(new IntegerConstNode(e)); :}
+    | REAL_CONST:e {: RESULT = new ConstNode(new RealConstNode(e)); :}
+    | Bool_Const:e {: RESULT = new ConstNode(new BoolConstNode(e)); :}
+    | STRING_CONST:e {: RESULT = new ConstNode(new StringConstNode(e)); :}
+;
+
+Bool_Const ::= TRUE {: RESULT = new BoolConstNode(new TrueNode()); :}
+    | FALSE {: RESULT = new BoolConstNode(new FalseNode()); :}
+;
+
+Fun ::= FUN ID:e1 LPAR ParamDeclList:e2 RPAR COLON Type:e3
+		VarDeclList:e4 StatList:e5 END FUN SEMI {: RESULT = new FunOpNode(new IdentifierNode(e1),e2,e3,new BodyOp(e4,e5)); :}
+	| FUN ID:e1 LPAR ParamDeclList:e2 RPAR
+		VarDeclList:e3 StatList:e4 END FUN SEMI {: RESULT = new FunOpNode(new IdentifierNode(e1),e2,new BodyOp(e3,e4)); :}
+;
+
+ParamDeclList ::= /*empty */ {: RESULT = new ParamDeclListNode(); :}
+	| NonEmptyParamDeclList:e {: RESULT = new ParamDeclListNode(e); :}
+;
+
+NonEmptyParamDeclList ::= ParDecl:e1 {: RESULT = new NonEmptyParamDeclListNode(e1); :}
+	| NonEmptyParamDeclList:e1 COMMA ParDecl:e2 {: RESULT = new NonEmptyParamDeclListNode(e1.getNonEmptyParamDeclList(),e2); :}
+;
+
+ParDecl ::= Type:e1 ID:e2 {: RESULT = new ParDeclOpNode(e1,new IdentifierNode(e2),false); :}
+	| OUT Type:e1 ID:e2 {: RESULT = new ParDeclOpNode(e1,new IdentifierNode(e2),true); :}
+;
+
+StatList ::= /* empty */ {: RESULT = new StatListNode(); :}
+	 | Stat:e1 StatList:e2 {: RESULT = new StatListNode(e1,e2.getStatListNode()); :}
+;
+
+Stat ::= AssignStat:e SEMI {: RESULT = e; :}
+	| WhileStat:e SEMI {: RESULT = e; :}
+	| ReadStat:e SEMI {: RESULT = e; :}
+	| WriteStat:e SEMI {: RESULT = e; :}
+	| CallFun:e SEMI {: RESULT = e; :}
+	| IfStat:e SEMI {: RESULT = e; :}
+	| RETURN Expr:e SEMI {: RESULT = e; :}
+;
+
+IfStat ::= IF Expr:e1 THEN VarDeclList:e2 StatList:e3 Else:e4 END IF {: RESULT = new IfStatOpNode(e1,new BodyOp(e2,e3),e4); :}
+;
+
+Else ::= /* empty */ {: RESULT = new ElseOpNode(); :}
+	| ELSE VarDeclList:e1 StatList:e2 {: RESULT = new ElseOpNode(new BodyOp(e1,e2)); :}
+;
+
+WhileStat ::= WHILE Expr:e1 LOOP VarDeclList:e2 StatList:e3 END LOOP {: RESULT = new WhileStatOpNode(e1,new BodyOp(e2,e3)); :}
+;
+
+ReadStat ::= READ IdList:e1 Expr:e2 {: RESULT = new ReadStatOpNode(e1,e2); :}
+	| READ IdList:e1 {: RESULT = new ReadStatOpNode(e1); :}
+;
+
+IdList ::= ID:e {: RESULT = new IdListNode(new IdentifierNode(e)); :}
+	| IdList:e1 COMMA ID:e2 {: RESULT = new IdListNode(e1.getIdListNode(),new IdentifierNode(e2)); :}
+;
+
+WriteStat ::=  WRITE  Expr:e {: RESULT = new WriteStatOpNode(CircuitSym.WRITE,e); :}
+	| WRITELN  Expr:e {: RESULT = new WriteStatOpNode(CircuitSym.WRITELN,e); :}
+	| WRITET  Expr:e {: RESULT = new WriteStatOpNode(CircuitSym.WRITET,e); :}
+	| WRITEB  Expr:e {: RESULT = new WriteStatOpNode(CircuitSym.WRITEB,e); :}
+;
+
+AssignStat ::=  ID:e1 ASSIGN Expr:e2 {: RESULT = new AssignStatOpNode(new IdentifierNode(e1),e2); :}
+;
+
+CallFun ::= ID:e1 LPAR ExprList:e2 RPAR {: RESULT = new CallFunNode(new IdentifierNode(e1),e2); :}
+	| ID:e1 LPAR RPAR {: RESULT = new CallFunNode(new IdentifierNode(e1)); :}
+;
+
+ExprList ::= Expr:e1 {: RESULT = new ExprListNode(e1); :}
+	| Expr:e1 COMMA ExprList:e2 {: RESULT = new ExprListNode(e1,e2.getExprNodeList()); :}
+	| OUTPAR ID:e {: RESULT = new ExprListNode(new IdentifierNode(e)); :}
+	| OUTPAR ID:e COMMA ExprList:e2 {: RESULT = new ExprListNode(new IdentifierNode(e),e2.getExprNodeList()); :}
+;
+
+Expr ::= TRUE {: RESULT = new TrueNode(); :}
+	| FALSE {: RESULT = new FalseNode(); :}
+	| INTEGER_CONST:e {: RESULT = new IntegerConstNode(e); :}
+	| REAL_CONST:e {: RESULT = new RealConstNode(e); :}
+	| STRING_CONST:e {: RESULT = new StringConstNode(e); :}
+	| ID:e {: RESULT = new IdentifierNode(e); :}
+	| CallFun:e {: RESULT = e; :}
+	| Expr:e1 PLUS Expr:e2 {: RESULT = new AddOpNode(e1,e2); :}
+	| Expr:e1  MINUS Expr:e2 {: RESULT = new DiffOpNode(e1,e2); :}
+	| Expr:e1  TIMES Expr:e2 {: RESULT = new MulOpNode(e1,e2); :}
+	| Expr:e1  DIV Expr:e2 {: RESULT = new DivOpNode(e1,e2); :}
+	| Expr:e1 DIVINT Expr:e2 {: RESULT = new DivIntOpNode(e1,e2); :}
+	| Expr:e1 AND Expr:e2 {: RESULT = new AndOpNode(e1,e2); :}
+	| Expr:e1 POW Expr:e2 {: RESULT = new PowOpNode(e1,e2); :}
+	| Expr:e1 STR_CONCAT Expr:e2 {: RESULT = new StrConcatOpNode(e1,e2); :}
+	| Expr:e1  OR Expr:e2 {: RESULT = new OrOpNode(e1,e2); :}
+	| Expr:e1  GT Expr:e2 {: RESULT = new GTOpNode(e1,e2); :}
+	| Expr:e1  GE Expr:e2 {: RESULT = new GEOpNode(e1,e2); :}
+	| Expr:e1  LT Expr:e2 {: RESULT = new LTOpNode(e1,e2); :}
+	| Expr:e1  LE Expr:e2 {: RESULT = new LEOpNode(e1,e2); :}
+	| Expr:e1  EQ Expr:e2 {: RESULT = new EQOpNode(e1,e2); :}
+	| Expr:e1  NE Expr:e2 {: RESULT = new NEOpNode(e1,e2); :}
+	| MINUS Expr:e {: RESULT = new UminusOpNode(e); :}
+	| NOT Expr:e {: RESULT = new NotOpNode(e); :}
+	| LPAR Expr:e RPAR {: RESULT = new LparRparNode(e); :}
+;

@@ -1,0 +1,18 @@
+//fibonacci
+
+fun fibonacci(integer number): integer
+    if number < 2 then
+        return number;
+    end if;
+    return fibonacci(number - 1) + fibonacci(number - 2);
+end fun;
+
+main
+
+    var n := 0, result := 0;
+
+    % n 'Inserisci la lunghezza della sequenza di Fibonacci:';
+    result := fibonacci(n);
+    ?. 'Fibonacci of ' & n & ' is ' & result;
+
+end main;

@@ -1,0 +1,29 @@
+main
+
+    integer x:=1,y:=5,z:=9;
+    real k:=0.0;
+    string parola:='elio';
+    bool unBooleano := true;
+
+    while (((((x = 1) or (y = 5)) or z = 9) and parola = 'elio') and unBooleano = true) loop
+        % k 'Dammi un numero con decimale ';
+        k := ((k + x) + (y + z));
+        if k > 70 then
+            unBooleano := false;
+        else
+            string nuova;
+            % nuova 'Scrivi la parola (elio) ';
+            if parola = nuova then
+                integer nuovax;
+                % nuovax 'Scrivi il numero (1) ';
+                if nuovax = x then
+                    x := 2;
+                end if;
+            end if;
+        end if;
+    end loop;
+
+    ?. '';
+    ?. 'fine';
+
+end main;

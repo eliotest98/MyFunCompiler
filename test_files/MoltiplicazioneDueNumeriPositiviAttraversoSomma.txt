@@ -1,0 +1,24 @@
+
+fun moltiplica (integer x, integer y): integer
+    var z:=0, i:=1;
+
+    while i <= y loop
+        z := z + x;
+        i := i + 1;
+    end loop;
+
+    return z;
+end fun;
+
+main
+
+    integer x, y, z;
+
+    %x 'Inserire il primo numero : ';
+    %y 'Inserire il secondo numero : ';
+
+    z := moltiplica(x,y);
+
+    ?. 'result ' & x & '*' & y & '=' & z;
+
+end main;

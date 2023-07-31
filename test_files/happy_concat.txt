@@ -1,0 +1,22 @@
+#*
+    Questo programma testa le concatenazioni
+#
+
+main
+    integer aInt;
+    real aReal;
+    integer numberTime;
+    var counter := 0;
+    var aString := 'no';
+
+	% aInt 'inserisci un intero: ';
+	% aString 'inserisci una stringa: ';
+	% aReal 'inserisci un reale: ';
+	% numberTime 'quante volte vuoi stampare? ';
+
+	while counter < numberTime loop
+	    ?. 'concatena un intero {' & aInt & '} con una stringa {' & aString & '} e un real {' & aReal & '}';
+	    counter := counter + 1;
+	end loop;
+
+end main;

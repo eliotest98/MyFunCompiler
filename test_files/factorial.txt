@@ -1,0 +1,25 @@
+// compute factorials, the slow recursive way.
+integer n := 0;
+
+fun factorial(integer n): integer
+
+    integer result := 0;
+
+    if n = 0 then
+	    result := 1;
+    else
+	    result := n * factorial(n - 1);
+    end if;
+
+    return result;
+end fun;
+
+main
+
+    while n < 10 loop
+        ?. 'Enter n or >= 10 to exit: ';
+        % n;
+	    ?. 'Factorial of ' & n & ' is ' & factorial(n);
+    end loop;
+
+end main;

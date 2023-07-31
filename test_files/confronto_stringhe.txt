@@ -1,0 +1,54 @@
+// Il Programma effettua una registrazione ed il controllo dell'uso delle stringhe
+
+main
+
+    string name;
+    string surname;
+    string provaNome;
+    string provaCognome;
+    string codice;
+    var provaCode:='Sn4aG9Lc25';
+    bool nm,cm,cd;
+    integer i;
+
+    % name 'Inserisci il nome : ';
+    % surname 'Inserisci il cognome : ';
+    ?. '';
+
+    % provaNome 'Ripetere il nome per effettuare autenticazione : ';
+    % provaCognome 'Ripetere il cognome per effettuare autenticazione : ';
+
+    while provaCode <> codice loop
+        ?. 'Verifichiamo che non sei un Robot';
+        ?. 'Inserisci la seguente frase: ' & provaCode;
+        % codice;
+        if codice = provaCode then
+            cd := true;
+        end if;
+    end loop;
+
+    if provaNome = name then
+        nm := true;
+    else
+        nm := false;
+        ?, 'ERRORE : I due nomi inseriti non coincidono';
+    end if;
+
+    if provaCognome = surname then
+        cm := true;
+    else
+        cm := false;
+        ?, 'ERRORE : I due cognomi inseriti non coincidono';
+    end if;
+
+    if nm = true then
+        if cm = true then
+            if cd = true then
+                ?, 'Autenticazione effettuata con successo';
+            end if;
+        end if;
+    end if;
+
+    ?. '';
+    ?. 'fine';
+end main;

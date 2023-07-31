@@ -1,0 +1,28 @@
+#* Indovina la lettera #
+
+main
+
+    string lettera;
+    var oracolo := 'e';
+    var tentativiMancanti := 10;
+
+    ?. 'Questo gioco si chiama indovina la lettera, il tuo obiettivo e quello di indovinare la lettera in massimo ' & tentativiMancanti & ' tentativi in bocca al lupo!';
+    % lettera 'Scrivi una lettera ';
+
+    while lettera != oracolo and tentativiMancanti != 0 loop
+        tentativiMancanti := tentativiMancanti - 1;
+        if lettera = oracolo then
+            ?. 'Trovata!';
+        else
+            ?. 'Non e la lettera giusta riprova!';
+            % lettera 'Scrivi una lettera ';
+        end if;
+    end loop;
+
+    if tentativiMancanti != 0 then
+        ?. 'Ti mancavano solo ' & tentativiMancanti & ' tentativi, hai trovato la lettera bravo!';
+    else
+        ?. 'Mi spiace hai esaurito i tuoi tentativi a disposizione, la lettera era ' & oracolo;
+    end if;
+
+end main;

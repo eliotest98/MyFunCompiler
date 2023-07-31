@@ -1,0 +1,38 @@
+fun numeri(out integer scelta)
+
+    if scelta > 15 then
+        ?. 'hai inserito troppi numeri!';
+        while scelta > 15 loop
+            % scelta 'Quanti numeri vuoi sommare? (inserire meno di 15 numeri)';
+            if scelta > 15 then
+                ?. 'hai inserito troppi numeri!';
+            end if;
+        end loop;
+    end if;
+
+end fun;
+
+fun addiziono(integer numeri): real
+    real addendo;
+    var count:=0;
+    var risultato:=0.0;
+
+    while count < numeri loop
+        ?. 'inserisci il ' & count & ' numero: ';
+        % addendo;
+        risultato := risultato + addendo;
+        ?. 'attualmente il risultato e: ' & risultato;
+        count := count + 1;
+    end loop;
+
+    return risultato;
+end fun;
+
+main
+    integer num;
+    real risultato;
+    % num 'Quanti numeri vuoi sommare? (inserire meno di 15 numeri)';
+    numeri(num);
+    risultato := addiziono(num);
+    ?. 'Il risultato delle operazioni e: ' & risultato;
+end main;

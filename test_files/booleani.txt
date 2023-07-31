@@ -1,0 +1,56 @@
+main
+    integer sceltaT:=0, sceltaF:=0;
+    bool decisione;
+
+    ?. 'Per ognuna delle seguenti frasi rispondere con 1 (\'true\') o 0 (\'false\')';
+
+    ?. '1. Ti piace vedere serie TV?';
+    % decisione;
+    if decisione = true then
+        sceltaT := sceltaT + 1;
+    else
+        sceltaF := sceltaF + 1;
+    end if;
+
+    ?. '2. Ti piace la pizza?';
+    % decisione;
+    if decisione = true then
+        sceltaT := sceltaT + 1;
+    else
+        sceltaF := sceltaF + 1;
+    end if;
+
+    ?. '3. Ti piace fare sport?';
+    % decisione;
+    if decisione = true then
+        sceltaT := sceltaT + 1;
+    else
+        sceltaF := sceltaF + 1;
+    end if;
+
+    ?. '4. Ti piace uscire con gli amici?';
+    % decisione;
+    if decisione = true then
+        sceltaT := sceltaT + 1;
+    else
+        sceltaF := sceltaF + 1;
+    end if;
+
+
+    ?. '5. Ti piace fare shopping?';
+    % decisione;
+    if decisione = true then
+        sceltaT := sceltaT + 1;
+    else
+        sceltaF := sceltaF + 1;
+    end if;
+
+    ?. 'hai dato ' & sceltaT & ' risposte \'true\' e ' & sceltaF & ' risposte \'false\'';
+    if sceltaT > sceltaF  then
+        ?. 'Sei una persona davvero Interessante!';
+    end if;
+    if sceltaF > sceltaT then
+       ?. 'Prova a socializzare di piu';
+    end if;
+
+end main;

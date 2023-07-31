@@ -1,0 +1,338 @@
+<ProgramOp>
+    <FunOp>(id, "print_continue")
+        <ParDeclOp>
+            <ModeOp>out</ModeOp>
+            <TypeOp>bool</TypeOp> (id, "cont")
+        </ParDeclOp>
+        <BodyOp>
+            <VarDeclOp>
+                <TypeOp>string</TypeOp> (id, "in")
+            </VarDeclOp>
+            <ReadStatOp>(id, "in") (string_const, "Vuoi continuare? (s/n) --> ")</ReadStatOp>
+            <IfStatOp>
+                <EQOp>(id, "in") (string_const, "s")</EQOp>
+                <BodyOp>
+                    <AssignOp>(id, "cont") true</AssignOp>
+                </BodyOp>
+                <BodyOp>
+                    <AssignOp>(id, "cont") false</AssignOp>
+                </BodyOp>
+            </IfStatOp>
+        </BodyOp>
+    </FunOp>
+    <FunOp>(id, "do_operation")
+        <ParDeclOp>
+            <ModeOp>in</ModeOp>
+            <TypeOp>int</TypeOp> (id, "choose")
+        </ParDeclOp>
+        <BodyOp>
+            <IfStatOp>
+                <EQOp>(id, "choose") (integer_const, "1")</EQOp>
+                <BodyOp>
+                    <CallFunOp>(id, "do_sum")</CallFunOp>
+                </BodyOp>
+                <BodyOp>
+                    <IfStatOp>
+                        <EQOp>(id, "choose") (integer_const, "2")</EQOp>
+                        <BodyOp>
+                            <CallFunOp>(id, "do_mul")</CallFunOp>
+                        </BodyOp>
+                        <BodyOp>
+                            <IfStatOp>
+                                <EQOp>(id, "choose") (integer_const, "3")</EQOp>
+                                <BodyOp>
+                                    <CallFunOp>(id, "do_div_int")</CallFunOp>
+                                </BodyOp>
+                                <BodyOp>
+                                    <IfStatOp>
+                                        <EQOp>(id, "choose") (integer_const, "4")</EQOp>
+                                        <BodyOp>
+                                            <CallFunOp>(id, "do_pow")</CallFunOp>
+                                        </BodyOp>
+                                        <BodyOp>
+                                            <IfStatOp>
+                                                <EQOp>(id, "choose") (integer_const, "5")</EQOp>
+                                                <BodyOp>
+                                                    <CallFunOp>(id, "do_fib") <ParamOp>true</ParamOp>
+                                                    </CallFunOp>
+                                                </BodyOp>
+                                                <BodyOp>
+                                                    <IfStatOp>
+                                                        <EQOp>(id, "choose") (integer_const, "6")</EQOp>
+                                                        <BodyOp>
+                                                            <CallFunOp>(id, "do_fib") <ParamOp>false</ParamOp>
+                                                            </CallFunOp>
+                                                        </BodyOp>
+                                                    </IfStatOp>
+                                                </BodyOp>
+                                            </IfStatOp>
+                                        </BodyOp>
+                                    </IfStatOp>
+                                </BodyOp>
+                            </IfStatOp>
+                        </BodyOp>
+                    </IfStatOp>
+                </BodyOp>
+            </IfStatOp>
+        </BodyOp>
+    </FunOp>
+    <FunOp>(id, "do_fib")
+        <ParDeclOp>
+            <ModeOp>in</ModeOp>
+            <TypeOp>bool</TypeOp> (id, "recursive")
+        </ParDeclOp>
+        <BodyOp>
+            <VarDeclOp>
+                <TypeOp>int</TypeOp> (id, "n")
+            </VarDeclOp>
+            <VarDeclOp>
+                <TypeOp>string</TypeOp> (id, "message")
+            </VarDeclOp>
+            <WriteOp>(writeln) (string_const, "(5) FIBONACCI")</WriteOp>
+            <ReadStatOp>(id, "n") (string_const, "Inserisci n: ")</ReadStatOp>
+            <WriteOp>(writeln) (string_const, "")</WriteOp>
+            <AssignOp>(id, "message")
+                <StrCatOp>
+                    <StrCatOp>(string_const, "Il numero di Fibonacci in posizione ") (id, "n")</StrCatOp> (string_const,
+                    " vale ")
+                </StrCatOp>
+            </AssignOp>
+            <IfStatOp>(id, "recursive")
+                <BodyOp>
+                    <AssignOp>(id, "message")
+                        <StrCatOp>(id, "message")
+                            <CallFunOp>(id, "recursive_fib") <ParamOp>(id, "n")</ParamOp>
+                            </CallFunOp>
+                        </StrCatOp>
+                    </AssignOp>
+                </BodyOp>
+                <BodyOp>
+                    <AssignOp>(id, "message")
+                        <StrCatOp>(id, "message")
+                            <CallFunOp>(id, "iterative_fib") <ParamOp>(id, "n")</ParamOp>
+                            </CallFunOp>
+                        </StrCatOp>
+                    </AssignOp>
+                </BodyOp>
+            </IfStatOp>
+            <WriteOp>(writeln) (id, "message")</WriteOp>
+        </BodyOp>
+    </FunOp>
+    <FunOp>(id, "iterative_fib")
+        <ParDeclOp>
+            <ModeOp>in</ModeOp>
+            <TypeOp>int</TypeOp> (id, "n")
+        </ParDeclOp>
+        <TypeOp>int</TypeOp>
+        <BodyOp>
+            <IfStatOp>
+                <EQOp>(id, "n") (integer_const, "1")</EQOp>
+                <BodyOp>(integer_const, "0")</BodyOp>
+            </IfStatOp>
+            <IfStatOp>
+                <EQOp>(id, "n") (integer_const, "2")</EQOp>
+                <BodyOp>(integer_const, "1")</BodyOp>
+            </IfStatOp>
+            <IfStatOp>
+                <GTOp>(id, "n") (integer_const, "2")</GTOp>
+                <BodyOp>
+                    <VarDeclOp>
+                        <TypeOp>int</TypeOp>
+                        <IdInitOp>(id, "i") (integer_const, "3")</IdInitOp>
+                        <IdInitOp>(id, "res") (integer_const, "1")</IdInitOp>
+                        <IdInitOp>(id, "prev") (integer_const, "0")</IdInitOp>
+                    </VarDeclOp>
+                    <WhileOp>
+                        <LEOp>(id, "i") (id, "n")</LEOp>
+                        <BodyOp>
+                            <VarDeclOp>
+                                <TypeOp>int</TypeOp>
+                                <IdInitOp>(id, "tmp") (id, "res")</IdInitOp>
+                            </VarDeclOp>
+                            <AssignOp>(id, "res") <AddOp>(id, "res") (id, "prev")</AddOp>
+                            </AssignOp>
+                            <AssignOp>(id, "prev") (id, "tmp")</AssignOp>
+                            <AssignOp>(id, "i") <AddOp>(id, "i") (integer_const, "1")</AddOp>
+                            </AssignOp>
+                        </BodyOp>
+                    </WhileOp>
+                    (id, "res")
+                </BodyOp>
+            </IfStatOp>
+            <UminusOp>(integer_const, "1")</UminusOp>
+        </BodyOp>
+    </FunOp>
+    <FunOp>(id, "recursive_fib")
+        <ParDeclOp>
+            <ModeOp>in</ModeOp>
+            <TypeOp>int</TypeOp> (id, "n")
+        </ParDeclOp>
+        <TypeOp>int</TypeOp>
+        <BodyOp>
+            <IfStatOp>
+                <EQOp>(id, "n") (integer_const, "1")</EQOp>
+                <BodyOp>(integer_const, "0")</BodyOp>
+            </IfStatOp>
+            <IfStatOp>
+                <EQOp>(id, "n") (integer_const, "2")</EQOp>
+                <BodyOp>(integer_const, "1")</BodyOp>
+            </IfStatOp>
+            <AddOp>
+                <CallFunOp>(id, "recursive_fib")
+                    <ParamOp>
+                        <DiffOp>(id, "n") (integer_const, "1")</DiffOp>
+                    </ParamOp>
+                </CallFunOp>
+                <CallFunOp>(id, "recursive_fib")
+                    <ParamOp>
+                        <DiffOp>(id, "n") (integer_const, "2")</DiffOp>
+                    </ParamOp>
+                </CallFunOp>
+            </AddOp>
+        </BodyOp>
+    </FunOp>
+    <FunOp>(id, "do_pow")
+        <BodyOp>
+            <VarDeclOp>
+                <TypeOp>real</TypeOp> (id, "op1")(id, "op2")
+            </VarDeclOp>
+            <WriteOp>(writeln) (string_const, "(4) POTENZA")</WriteOp>
+            <ReadStatOp>(id, "op1") (string_const, "Inserisci la base: ")</ReadStatOp>
+            <ReadStatOp>(id, "op2") (string_const, "Inserisci esponente: ")</ReadStatOp>
+            <WriteOp>(writeln) (string_const, "")</WriteOp>
+            <WriteOp>(writeln)
+                <StrCatOp>
+                    <StrCatOp>
+                        <StrCatOp>
+                            <StrCatOp>
+                                <StrCatOp>(string_const, "La potenza di ") (id, "op1")</StrCatOp> (string_const, "
+                                elevato a ")
+                            </StrCatOp>
+                            (id, "op2")
+                        </StrCatOp>
+                        (string_const, " vale ")
+                    </StrCatOp>
+                    <PowOp>(id, "op1") (id, "op2")</PowOp>
+                </StrCatOp>
+            </WriteOp>
+        </BodyOp>
+    </FunOp>
+    <FunOp>(id, "do_div_int")
+        <BodyOp>
+            <VarDeclOp>
+                <TypeOp>int</TypeOp> (id, "op1")(id, "op2")
+            </VarDeclOp>
+            <WriteOp>(writeln) (string_const, "(3) DIVISIONE INTERA")</WriteOp>
+            <ReadStatOp>(id, "op1") (string_const, "Inserisci il primo operando: ")</ReadStatOp>
+            <ReadStatOp>(id, "op2") (string_const, "Inserisci il secondo operando: ")</ReadStatOp>
+            <WriteOp>(writeln) (string_const, "")</WriteOp>
+            <WriteOp>(writeln)
+                <StrCatOp>
+                    <StrCatOp>
+                        <StrCatOp>
+                            <StrCatOp>
+                                <StrCatOp>(string_const, "La divisione intera tra ") (id, "op1")</StrCatOp> (string_const,
+                                " e ")
+                            </StrCatOp>
+                            (id, "op2")
+                        </StrCatOp>
+                        (string_const, " vale ")
+                    </StrCatOp>
+                    <DivIntOp>(id, "op1") (id, "op2")</DivIntOp>
+                </StrCatOp>
+            </WriteOp>
+        </BodyOp>
+    </FunOp>
+    <FunOp>(id, "do_mul")
+        <BodyOp>
+            <VarDeclOp>
+                <TypeOp>real</TypeOp> (id, "op1")(id, "op2")
+            </VarDeclOp>
+            <WriteOp>(writeln) (string_const, "(2) MOLTIPLICAZIONE")</WriteOp>
+            <ReadStatOp>(id, "op1") (string_const, "Inserisci il primo operando: ")</ReadStatOp>
+            <ReadStatOp>(id, "op2") (string_const, "Inserisci il secondo operando: ")</ReadStatOp>
+            <WriteOp>(writeln) (string_const, "")</WriteOp>
+            <WriteOp>(writeln)
+                <StrCatOp>
+                    <StrCatOp>
+                        <StrCatOp>
+                            <StrCatOp>
+                                <StrCatOp>(string_const, "La moltiplicazione tra ") (id, "op1")</StrCatOp> (string_const,
+                                " e ")
+                            </StrCatOp>
+                            (id, "op2")
+                        </StrCatOp>
+                        (string_const, " vale ")
+                    </StrCatOp>
+                    <MulOp>(id, "op1") (id, "op2")</MulOp>
+                </StrCatOp>
+            </WriteOp>
+        </BodyOp>
+    </FunOp>
+    <FunOp>(id, "do_sum")
+        <BodyOp>
+            <VarDeclOp>
+                <TypeOp>real</TypeOp> (id, "op1")(id, "op2")
+            </VarDeclOp>
+            <WriteOp>(writeln) (string_const, "(1) SOMMA")</WriteOp>
+            <ReadStatOp>(id, "op1") (string_const, "Inserisci il primo operando: ")</ReadStatOp>
+            <ReadStatOp>(id, "op2") (string_const, "Inserisci il secondo operando: ")</ReadStatOp>
+            <WriteOp>(writeln) (string_const, "")</WriteOp>
+            <WriteOp>(writeln)
+                <StrCatOp>
+                    <StrCatOp>
+                        <StrCatOp>
+                            <StrCatOp>
+                                <StrCatOp>(string_const, "La somma tra ") (id, "op1")</StrCatOp> (string_const, " e ")
+                            </StrCatOp>
+                            (id, "op2")
+                        </StrCatOp>
+                        (string_const, " vale ")
+                    </StrCatOp>
+                    <AddOp>(id, "op1") (id, "op2")</AddOp>
+                </StrCatOp>
+            </WriteOp>
+        </BodyOp>
+    </FunOp>
+    <FunOp>(id, "print_menu")  <TypeOp>int</TypeOp>
+        <BodyOp>
+            <VarDeclOp>
+                <TypeOp>int</TypeOp> (id, "choose")
+            </VarDeclOp>
+            <WriteOp>(writeln) (string_const, "Scegli quale operazione vuoi svolgere per continuare")</WriteOp>
+            <WriteOp>(writeln) (string_const, " (1) Somma di due numeri")</WriteOp>
+            <WriteOp>(writeln) (string_const, " (2) Moltiplicazione di due numeri")</WriteOp>
+            <WriteOp>(writeln) (string_const, " (3) Divisione intera fra due numeri positivi")</WriteOp>
+            <WriteOp>(writeln) (string_const, " (4) Elevamento a potenza")</WriteOp>
+            <WriteOp>(writeln) (string_const, " (5) Successione di Fibonacci (ricorsiva)")</WriteOp>
+            <WriteOp>(writeln) (string_const, " (6) Successione di Fibonacci (iterativa)")</WriteOp>
+            <WriteOp>(writeln) (string_const, " (0) Esci")</WriteOp>
+            <ReadStatOp>(id, "choose") (string_const, "--> ")</ReadStatOp> (id, "choose")
+        </BodyOp>
+    </FunOp>
+    <BodyOp>
+        <VarDeclOp>
+            <TypeOp>var</TypeOp>
+            <IdInitOp>(id, "choose") (integer_const, "0")</IdInitOp>
+            <IdInitOp>(id, "cont") (bool_const, "true")</IdInitOp>
+        </VarDeclOp>
+        <WhileOp>(id, "cont")
+            <BodyOp>
+                <AssignOp>(id, "choose") <CallFunOp>(id, "print_menu")</CallFunOp>
+                </AssignOp>
+                <IfStatOp>
+                    <EQOp>(id, "choose") (integer_const, "0")</EQOp>
+                    <BodyOp>
+                        <AssignOp>(id, "cont") false</AssignOp>
+                    </BodyOp>
+                    <BodyOp>
+                        <CallFunOp>(id, "do_operation") <ParamOp>(id, "choose")</ParamOp>
+                        </CallFunOp>
+                        <CallFunOp>(id, "print_continue") <ParamOp>(id, "cont")</ParamOp>
+                        </CallFunOp>
+                    </BodyOp>
+                </IfStatOp>
+            </BodyOp>
+        </WhileOp>
+    </BodyOp>
+</ProgramOp>

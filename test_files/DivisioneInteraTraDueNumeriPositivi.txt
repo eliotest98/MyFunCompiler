@@ -1,0 +1,32 @@
+fun dividi (integer x,integer y): integer
+
+    integer z := 0, i := x;
+
+    while i >= y loop
+        i := i -y;
+        z := z + 1;
+    end loop;
+
+    return z;
+end fun;
+
+fun divInt(integer x, integer y): integer
+
+    integer z := x div y;
+    return z;
+
+end fun;
+
+main
+    integer x,y,z,h;
+
+    %x 'Inserire il primo numero : ';
+    %y 'Inserire il secondo numero : ';
+
+    z := dividi(x,y);
+    h := divInt(x,y);
+
+    ?. 'result divisione ' & x & '/' & y & '=' & z;
+    ?. 'result divInt ' & x & '/' & y & '=' & z;
+
+end main;

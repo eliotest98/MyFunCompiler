@@ -1,0 +1,18 @@
+fun powFun (integer x, integer y): integer
+    integer temp;
+    temp := x ^ y;
+    return temp;
+end fun;
+
+main
+
+    integer x, y, z;
+
+    %x 'Inserire il primo numero : ';
+    %y 'Inserire il secondo numero : ';
+
+    z := powFun(x,y);
+
+    ?. 'result pow ' & x & '*' & y & '=' & z;
+
+end main;
